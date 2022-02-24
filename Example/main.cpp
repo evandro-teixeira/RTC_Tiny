@@ -180,41 +180,20 @@ void Tarefa_Relogio(void *parameters)
 {
   DS1307Data_t Data;
 
-  // Obtem o Mutex-I2C
-  xSemaphoreTake(xMutex_I2C,portMAX_DELAY );
-  // Le os dados do RTC via barramento I2C
-  ModuleRTC.ReadRTC(&Data);
-  // libera o Mutex-I2C
-  xSemaphoreGive(xMutex_I2C);
-
   Data.Month = 2;
   Data.Day = 3;
   Data.Date = 22;
   while (1)
   {
-    /*
+    
     // Obtem o Mutex-I2C
     xSemaphoreTake(xMutex_I2C,portMAX_DELAY );
     // Le os dados do RTC via barramento I2C
     ModuleRTC.ReadRTC(&Data);
     // libera o Mutex-I2C
     xSemaphoreGive(xMutex_I2C);
-    */
-    Data.Seconds++;
-    if(Data.Seconds >= 60)
-    {
-      Data.Seconds = 0;
-      Data.Minutes++;
-      if(Data.Minutes >= 60)
-      {
-        Data.Minutes = 0;
-        Data.Hours++;
-        if(Data.Hours >= 24)
-        {
-          Data.Hours = 0;
-        }
-      }
-    }
+    
+
     // salva dados na memoria global
     SetVarRTC(Data);
 
